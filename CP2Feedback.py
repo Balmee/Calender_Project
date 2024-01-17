@@ -1,9 +1,28 @@
+## To make sure the program runs properly, clear terminal history so all code works at once
+
 import turtle
+
+## THIS IS FOR THE BACKGROUND TO BECOME VISIBLE AS AN IMAGE: remember tpo convert into a GIF format via msPaint to be used
+
+# You first create the screen
+win = turtle.Screen()
+
+# Set the screen dimensions (only if you want)
+win.setup(width=800, height=600)
+
+# Set the background
+win.bgpic("triassic-banner with gif format.gif")
+
+
+
+
+
+
+## MAIN CALENDER BODY, TO PRODUCE THE CALENDER OVERLAY
 
 import calendar
 
-
-def draw_month(t, year, month, start_x, start_y, const):
+def draw_month(p, year, month, start_x, start_y, const):
 
    # Get the first weekday of the month and number of days in the month
 
@@ -12,58 +31,58 @@ def draw_month(t, year, month, start_x, start_y, const):
 
    # Drawing the month name/title
 
-   t.penup()
+   p.penup()
+   
+   p.goto(start_x, start_y)
 
-   t.goto(start_x, start_y)
-
-   t.pendown()
+   p.pendown()
 
    for i in range(2):
 
-       t.forward(const * 7)
+       p.forward(const * 7)
 
-       t.right(90)
+       p.right(90)
 
-       t.forward(const)
+       p.forward(const)
 
-       t.right(90)
+       p.right(90)
 
-   t.penup()
+   p.penup()
 
-   t.goto(start_x + 10, start_y - 15)  # Adjust the position for month title
+   p.goto(start_x + 10, start_y - 15)  # Adjust the position for month title
 
-   t.pendown()
+   p.pendown()
 
-   t.write(monthname[month], font=("Arial", 10, "normal"))
+   p.write(monthname[month], font=("Arial", 10, "bold"))
 
-   t.penup()
+   p.penup()
 
 
    # Drawing the weekdays headers
 
-   t.goto(start_x, start_y - const)
+   p.goto(start_x, start_y - const)
 
    for day in weekdays[1:]:
 
-       t.pendown()
+       p.pendown()
 
-       t.forward(const)
+       p.forward(const)
 
-       t.penup()
+       p.penup()
 
-       t.backward(const)
+       p.backward(const)
 
-       t.right(90)
+       p.right(90)
 
-       t.forward(const)
+       p.forward(const)
 
-       t.write(day, align="center", font=("Arial", 8, "normal"))
+       p.write(day, align="center", font=("Arial", 9, "bold"))
 
-       t.backward(const)
+       p.backward(const)
 
-       t.left(90)
+       p.left(90)
 
-       t.forward(const)
+       p.forward(const)
 
 
    # Drawing the grid for the days and placing day numbers
@@ -74,19 +93,19 @@ def draw_month(t, year, month, start_x, start_y, const):
 
        for j in range(7):
 
-           t.goto(start_x + j*const, start_y - const*(i+2))
+           p.goto(start_x + j*const, start_y - const*(i+2))
 
-           t.setheading(0)
+           p.setheading(0)
 
-           t.pendown()
+           p.pendown()
 
            for k in range(4):
 
-               t.forward(const)
+               p.forward(const)
 
-               t.right(90)
+               p.right(90)
 
-           t.penup()
+           p.penup()
 
            if i == 0 and j < first_weekday:
 
@@ -96,16 +115,16 @@ def draw_month(t, year, month, start_x, start_y, const):
 
                # Move the turtle to the top-left corner of the cell to write the day number
 
-               t.goto(start_x + j*const + 3, start_y - const*(i+2) - 15)
+               p.goto(start_x + j*const + 3, start_y - const*(i+2) - 15)
 
-               t.write(day_num, font=("Arial", 8, "normal"))
+               p.write(day_num, font=("Arial", 8, "bold"))
 
                day_num += 1
 
 
-# Constants
+# CONSTANTS (what will always stay the same)
 
-year = 2023  # Example year
+year = 2024  # Year
 
 const = 20  # Size of each day's box
 
@@ -118,9 +137,9 @@ weekdays = ["", "M", "T", "W", "T", "F", "S", "S"]  # Weekdays starting with Mon
 
 # Initializing the Turtle
 
-t = turtle.Turtle()
+p = turtle.Turtle()
 
-t.speed(0)
+p.speed("fastest")
 
 
 # Adjust the screen size if needed
@@ -132,17 +151,19 @@ screen.setup(width=1500, height=1000)
 
 # Drawing each month
 
-horizontal_spacing = 300
+p.width(3)
 
-vertical_spacing = 220
+horizontal_spacing = 350
+
+vertical_spacing = 180
 
 for month in range(1, 13):
 
-   draw_month(t, year, month, -500 + horizontal_spacing * ((month - 1) % 4), 300 - vertical_spacing * ((month - 1) // 4), const)
+   draw_month(p, year, month, -625 + horizontal_spacing * ((month - 1) % 4), 450 - vertical_spacing * ((month - 1) // 4), const)   # Controls the placement of month grids
 
 
 # Hide the turtle and complete
 
-t.hideturtle()
+p.hideturtle()
 
 turtle.done()
